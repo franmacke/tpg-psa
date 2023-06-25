@@ -1,8 +1,7 @@
 package com.Aninfo.Proyectos.service;
 
 import com.Aninfo.Proyectos.domain.Proyecto;
-import org.springframework.stereotype.Service;
-
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,4 +16,6 @@ public interface ProyectoService {
     void eliminarProyecto(Long id);
 
     List<Proyecto> listarProyectos();
+
+    List<Proyecto> obtenerProyectosEntreDosRangosDeFechas(LocalDate fechaInicio, LocalDate fechaFin);
 }
