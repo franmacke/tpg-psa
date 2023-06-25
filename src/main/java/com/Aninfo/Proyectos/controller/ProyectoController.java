@@ -1,9 +1,13 @@
 package com.Aninfo.Proyectos.controller;
 
 import com.Aninfo.Proyectos.domain.Proyecto;
+import com.Aninfo.Proyectos.domain.Tarea;
 import com.Aninfo.Proyectos.service.ProyectoService;
+import com.Aninfo.Proyectos.service.TareaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/proyecto")
@@ -11,6 +15,9 @@ public class ProyectoController {
 
     @Autowired
     private ProyectoService proyectoService;
+
+    @Autowired
+    private TareaService tareaService;
 
     @GetMapping("/{id}")
     public Proyecto obtenerProyecto(@PathVariable Long id){
@@ -30,5 +37,20 @@ public class ProyectoController {
     @DeleteMapping("/{id}")
     public void eliminarProyecto(@PathVariable Long id){
         proyectoService.eliminarProyecto(id);
+    }
+
+    @GetMapping("/listar")
+    public List<Proyecto> listarProyectos(){
+        return proyectoService.listarProyectos();
+    }
+
+    @PutMapping("/agregarTarea/{idProyecto}/{id}")
+    public void agregarTarea(@PathVariable Long idProyecto, @PathVariable Long id){
+        Proyecto proyecto = proyectoService.obtenerProyecto(idProyecto).get();
+        Tarea tarea = tareaService.obtenerTarea(id).get();
+        proyecto.agregarTarea(tarea);
+        proyectoService.guardarProyecto(proyecto);
+        tarea.asignarProyecto(proyecto);
+        tareaService.guardarTarea(tarea);
     }
 }

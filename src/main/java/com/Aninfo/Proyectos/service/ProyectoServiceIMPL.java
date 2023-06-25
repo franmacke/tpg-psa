@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,5 +39,11 @@ public class ProyectoServiceIMPL implements ProyectoService {
     @Transactional
     public void eliminarProyecto(Long id) {
         proyectoDAO.delete(proyectoDAO.findById(id).get());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Proyecto> listarProyectos(){
+        return (proyectoDAO.findAll());
     }
 }
