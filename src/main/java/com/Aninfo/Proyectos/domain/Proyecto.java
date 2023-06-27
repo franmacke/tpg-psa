@@ -37,6 +37,14 @@ public class Proyecto implements Serializable {
     }
 
     public void agregarTarea(Tarea tarea){
-        this.tareas.add(tarea);
+        if (!this.validadorDeFechasDeTarea(tarea)){
+            throw new RuntimeException("error para cargar un ticket fuera de tiempo dentro del proyecto");
+        }
+        this.tareas.add(tarea); //TODO: check this
+    }
+
+    private boolean validadorDeFechasDeTarea(Tarea tarea) {
+        return this.fechaInicio.isBefore(tarea.getFechaInicio()) &&
+                this.fechaFinalizacion.isAfter(tarea.getFechaFinal());
     }
 }

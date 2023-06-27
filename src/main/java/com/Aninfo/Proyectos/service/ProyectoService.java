@@ -17,5 +17,5 @@ public interface ProyectoService {
 
     List<Proyecto> listarProyectos();
 
-    List<Proyecto> obtenerProyectosEntreDosRangosDeFechas(LocalDate fechaInicio, LocalDate fechaFin);
+    List<Proyecto> obtenerProyectosEntreDosFechas(LocalDate fechaInicio, LocalDate fechaFin);
 }

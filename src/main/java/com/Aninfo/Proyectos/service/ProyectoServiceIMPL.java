@@ -49,7 +49,7 @@ public class ProyectoServiceIMPL implements ProyectoService {
     }
 
     @Override
-    public List<Proyecto> obtenerProyectosEntreDosRangosDeFechas(LocalDate fechaInicio, LocalDate fechaFin) {
+    public List<Proyecto> obtenerProyectosEntreDosFechas(LocalDate fechaInicio, LocalDate fechaFin) {
         return proyectoDAO.obtenerProyectosEntreDosFechas(fechaInicio, fechaFin);
     }
 }

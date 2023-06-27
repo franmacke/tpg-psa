@@ -29,7 +29,7 @@ public class ProyectoController {
     @GetMapping("/rangodefechas/{fechaInicio}/{fechaFinalizacion}")
     public List<Proyecto> obtenerProyectosEntreRangosDeFecha( @PathVariable("fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fechaInicio,
                                                               @PathVariable("fechaFinalizacion") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fechaFin)  {
-        return proyectoService.obtenerProyectosEntreDosRangosDeFechas(fechaInicio, fechaFin);
+        return proyectoService.obtenerProyectosEntreDosFechas(fechaInicio, fechaFin);
     }
 
     @PostMapping
