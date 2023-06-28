@@ -38,4 +38,11 @@ public class TareaController {
     public List<Tarea> listarTareas(){
         return tareaService.listarTareas();
     }
+
+    @PutMapping("/finalizarTarea/{id}/{horasReales}/{esfuerzoReal}")
+    public void finalizarTarea(@PathVariable Long id, @PathVariable Integer horasReales, @PathVariable Integer esfuerzoReal){
+        Tarea tarea = tareaService.obtenerTarea(id).get();
+        tarea.finalizarTarea(horasReales,esfuerzoReal);
+        tareaService.guardarTarea(tarea);
+    }
 }

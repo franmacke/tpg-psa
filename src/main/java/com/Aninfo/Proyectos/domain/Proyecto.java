@@ -18,6 +18,7 @@ public class Proyecto implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String nombre;
+    private String descripcion;
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaInicio;
@@ -32,7 +33,6 @@ public class Proyecto implements Serializable {
         this.lider = proyecto.lider;
         this.fechaFinalizacion = proyecto.fechaFinalizacion;
         this.fechaInicio = proyecto.fechaInicio;
-
         return this;
     }
 
