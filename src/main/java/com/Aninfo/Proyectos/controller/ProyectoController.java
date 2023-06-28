@@ -5,8 +5,10 @@ import com.Aninfo.Proyectos.domain.Tarea;
 import com.Aninfo.Proyectos.service.ProyectoService;
 import com.Aninfo.Proyectos.service.TareaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -22,6 +24,12 @@ public class ProyectoController {
     @GetMapping("/{id}")
     public Proyecto obtenerProyecto(@PathVariable Long id){
         return proyectoService.obtenerProyecto(id).get();
+    }
+
+    @GetMapping("/rangodefechas/{fechaInicio}/{fechaFinalizacion}")
+    public List<Proyecto> obtenerProyectosEntreRangosDeFecha( @PathVariable("fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fechaInicio,
+                                                              @PathVariable("fechaFinalizacion") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fechaFin)  {
+        return proyectoService.obtenerProyectosEntreDosFechas(fechaInicio, fechaFin);
     }
 
     @PostMapping
