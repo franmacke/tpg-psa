@@ -1,5 +1,6 @@
 package com.Aninfo.Proyectos.domain;
 
+import com.Aninfo.Proyectos.Enum.EstadoProyecto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class Proyecto implements Serializable {
     private long id;
     private String nombre;
     private String descripcion;
+    private EstadoProyecto estado;
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaInicio;
@@ -37,14 +39,7 @@ public class Proyecto implements Serializable {
     }
 
     public void agregarTarea(Tarea tarea){
-        if (!this.validadorDeFechasDeTarea(tarea)){
-            throw new RuntimeException("error para cargar un ticket fuera de tiempo dentro del proyecto");
-        }
-        this.tareas.add(tarea); //TODO: check this
+        this.tareas.add(tarea);
     }
 
-    private boolean validadorDeFechasDeTarea(Tarea tarea) {
-        return this.fechaInicio.isBefore(tarea.getFechaInicio()) &&
-                this.fechaFinalizacion.isAfter(tarea.getFechaFinal());
-    }
 }

@@ -1,7 +1,6 @@
 package com.Aninfo.Proyectos.service;
 
 import com.Aninfo.Proyectos.domain.Proyecto;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,5 +16,4 @@ public interface ProyectoService {
 
     List<Proyecto> listarProyectos();
 
-    List<Proyecto> obtenerProyectosEntreDosFechas(LocalDate fechaInicio, LocalDate fechaFin);
 }

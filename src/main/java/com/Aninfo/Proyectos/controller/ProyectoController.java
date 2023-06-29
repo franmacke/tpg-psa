@@ -1,15 +1,16 @@
 package com.Aninfo.Proyectos.controller;
 
 import com.Aninfo.Proyectos.domain.Proyecto;
+import com.Aninfo.Proyectos.domain.RecursoHumano;
 import com.Aninfo.Proyectos.domain.Tarea;
 import com.Aninfo.Proyectos.service.ProyectoService;
+import com.Aninfo.Proyectos.service.RecursoService;
 import com.Aninfo.Proyectos.service.TareaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @RestController
 @RequestMapping("/proyecto")
@@ -21,16 +22,14 @@ public class ProyectoController {
     @Autowired
     private TareaService tareaService;
 
+    @Autowired
+    private RecursoService recursoService;
+
     @GetMapping("/{id}")
     public Proyecto obtenerProyecto(@PathVariable Long id){
         return proyectoService.obtenerProyecto(id).get();
     }
 
-    @GetMapping("/rangodefechas/{fechaInicio}/{fechaFinalizacion}")
-    public List<Proyecto> obtenerProyectosEntreRangosDeFecha( @PathVariable("fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fechaInicio,
-                                                              @PathVariable("fechaFinalizacion") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fechaFin)  {
-        return proyectoService.obtenerProyectosEntreDosFechas(fechaInicio, fechaFin);
-    }
 
     @PostMapping
     public void crearProyecto(@RequestBody Proyecto proyecto){
@@ -60,5 +59,43 @@ public class ProyectoController {
         proyectoService.guardarProyecto(proyecto);
         tarea.asignarProyecto(proyecto);
         tareaService.guardarTarea(tarea);
+    }
+
+    @GetMapping("/obtenerLideres")
+    public List<RecursoHumano> obtenerLideres(){
+        return this.recursoService.obtenerLideres();
+    }
+
+
+    @GetMapping("/horasRealesDelProyecto/{idProyecto}")
+    public Integer obtenerHorasDelProyecto(@PathVariable long idProyecto){
+        Proyecto proyecto = proyectoService.obtenerProyecto(idProyecto).get();
+
+        if (proyecto.getTareas().size() == 0) return 0;
+        AtomicReference<Integer> counter = new AtomicReference<>(0);
+        proyecto.getTareas().forEach(x -> counter.updateAndGet(v -> v + x.getHorasReales()));
+        return counter.get();
+    }
+
+
+    @PostMapping("/asignarLider/{idProyecto}/{lider}")
+    public void asignarLider(@PathVariable Long idProyecto, @PathVariable String lider){
+        Proyecto proyecto = this.proyectoService.obtenerProyecto(idProyecto).get();
+        proyecto.setLider(lider);
+        this.proyectoService.actualizarProyecto(idProyecto, proyecto);
+    }
+
+    @PutMapping("/cambiarEstadoAlSiguiente/{idProyecto}")
+    public void cambiarEstadoAlSiguiente(@PathVariable Long idProyecto){
+        Proyecto proyecto = this.proyectoService.obtenerProyecto(idProyecto).get();
+        proyecto.setEstado(proyecto.getEstado().siguienteEstado());
+        this.proyectoService.guardarProyecto(proyecto);
+    }
+
+    @PutMapping("/cambiarEstadoAlAnterior/{idProyecto}")
+    public void cambiarEstadoAlAnterior(@PathVariable Long idProyecto){
+        Proyecto proyecto = this.proyectoService.obtenerProyecto(idProyecto).get();
+        proyecto.setEstado(proyecto.getEstado().estadoAnterior());
+        this.proyectoService.guardarProyecto(proyecto);
     }
 }

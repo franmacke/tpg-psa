@@ -1,6 +1,6 @@
 package com.Aninfo.Proyectos.domain;
 
-import com.Aninfo.Proyectos.Enum.EstadoEnum;
+import com.Aninfo.Proyectos.Enum.EstadoTarea;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,7 +19,7 @@ public class Tarea {
     private String descripcion;
     private Integer horasEstimadas;
     private Integer horasReales;
-    private EstadoEnum estado;
+    private EstadoTarea estado;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaInicio;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -45,7 +45,7 @@ public class Tarea {
     public void finalizarTarea(Integer horasReales, Integer esfuerzoReal){
         this.esfuerzoReal = esfuerzoReal;
         this.horasReales = horasReales;
-        this.estado = EstadoEnum.COMPLETADO;
+        this.estado = EstadoTarea.COMPLETADO;
     }
 
     public void asignarProyecto(Proyecto proyecto){
