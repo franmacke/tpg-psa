@@ -20,4 +20,4 @@ RUN mvn package -DskipTests
 EXPOSE 8080
 
 # Comando para ejecutar la aplicación Java
-CMD ["java", "-jar", "target/tpg-psa.jar"]
+CMD ["java", "-jar", "tpg-psa.jar"]
