@@ -8,9 +8,6 @@ COPY src /app/src
 # Establecer el directorio de trabajo
 WORKDIR /app
 
-# Empaquetar la aplicación utilizando Maven
-RUN mvn clean package -DskipTests
-
 # Imagen base de Java 17
 FROM openjdk:17-jdk-slim AS runtime
 
