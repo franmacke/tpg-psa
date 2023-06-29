@@ -12,7 +12,7 @@ WORKDIR /app
 RUN mvn clean package -DskipTests
 
 # Imagen base de Java 17
-FROM adoptopenjdk:17-jre-hotspot AS runtime
+FROM openjdk:17-jdk-slim AS runtime
 
 # Establecer el directorio de trabajo
 WORKDIR /app
