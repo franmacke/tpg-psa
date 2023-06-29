@@ -1,28 +1,23 @@
-# Utilizar la imagen de Java 17 como base
-FROM adoptopenjdk:17-jdk-hotspot
+# Imagen base de Java y Maven
+FROM maven:3.6.3-openjdk-17-slim
 
-# Establecer el directorio de trabajo en la aplicación
+# Establecer el directorio de trabajo
 WORKDIR /app
 
 # Copiar el archivo pom.xml para descargar las dependencias
 COPY pom.xml .
 
-# Descargar las dependencias de Maven
+# Descargar las dependencias del proyecto
 RUN mvn dependency:go-offline -B
 
-# Copiar el resto del código fuente a la imagen
+# Copiar el resto de los archivos del proyecto
 COPY src ./src
 
-# Compilar la aplicación con Maven
-RUN mvn clean package -DskipTests
+# Empaquetar la aplicación en un archivo JAR
+RUN mvn package -DskipTests
 
-# Establecer las variables de entorno para la base de datos H2
-ENV DB_URL=jdbc:h2:mem:testdb
-ENV DB_USERNAME=sa
-ENV DB_PASSWORD=password
-
-# Exponer el puerto en el que se ejecutará la aplicación
+# Exponer el puerto 8080
 EXPOSE 8080
 
-# Ejecutar la aplicación
-CMD ["java", "-jar", "target/tpg-psa.jar"]
+# Comando para ejecutar la aplicación Java
+CMD ["java", "-jar", "target/Proyectos-0.0.1-SNAPSHOT.jar"]
