@@ -61,12 +61,6 @@ public class ProyectoController {
         tareaService.guardarTarea(tarea);
     }
 
-    @GetMapping("/obtenerLideres")
-    public List<RecursoHumano> obtenerLideres(){
-        return this.recursoService.obtenerLideres();
-    }
-
-
     @GetMapping("/horasRealesDelProyecto/{idProyecto}")
     public Integer obtenerHorasDelProyecto(@PathVariable long idProyecto){
         Proyecto proyecto = proyectoService.obtenerProyecto(idProyecto).get();
@@ -97,5 +91,15 @@ public class ProyectoController {
         Proyecto proyecto = this.proyectoService.obtenerProyecto(idProyecto).get();
         proyecto.setEstado(proyecto.getEstado().estadoAnterior());
         this.proyectoService.guardarProyecto(proyecto);
+    }
+
+    @GetMapping("/obtenerRecursos")
+    public List<RecursoHumano> obtenerRecursos(){
+        return recursoService.obtenerRecursos();
+    }
+
+    @GetMapping("/{idProyecto}/listarTareas")
+    public List<Tarea> listarTareas(@PathVariable Long idProyecto){
+        return this.proyectoService.obtenerProyecto(idProyecto).get().getTareas();
     }
 }

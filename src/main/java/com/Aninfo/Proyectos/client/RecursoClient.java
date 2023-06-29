@@ -20,8 +20,7 @@ public class RecursoClient {
 
     public List<RecursoHumano> getRecursos() {
         ResponseEntity<List<RecursoHumano>> response = restTemplate.exchange(
-//                "https://649cde839bac4a8e669d0392.mockapi.io/api/v1/recurso",
-                "https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/754f50e8-20d8-4223-bbdc-56d50131d0ae/recursos-psa/1.0.1/m/api/recursos",
+             "https://api-recursos.onrender.com/recursos",
                 HttpMethod.GET,
                 null,
                 responseType);

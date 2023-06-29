@@ -13,7 +13,7 @@ public class RecursoService {
     @Autowired
     private RecursoClient recursoClient;
 
-    public List<RecursoHumano> obtenerLideres() {
+    public List<RecursoHumano> obtenerRecursos() {
         return recursoClient.getRecursos();
     }
 }
