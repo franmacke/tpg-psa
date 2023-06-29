@@ -1,24 +1,23 @@
-# Imagen base de Java 17 openjdk con Maven
-FROM maven:3.8-openjdk-17 AS build
-
-# Copiar el código fuente y el archivo pom.xml al contenedor
-COPY pom.xml /app/pom.xml
-COPY src /app/src
+# Imagen base de Java y Maven
+FROM maven:3.6.3-openjdk-17-slim
 
 # Establecer el directorio de trabajo
 WORKDIR /app
 
-# Imagen base de Java 17
-FROM ibm-semeru-runtimes:open-17-jre-centos7 AS runtime
+# Copiar el archivo pom.xml para descargar las dependencias
+COPY pom.xml .
 
-# Establecer el directorio de trabajo
-WORKDIR /app
+# Descargar las dependencias del proyecto
+RUN mvn dependency:go-offline -B
 
-# Copiar el archivo JAR generado en la etapa de construcción al contenedor
-COPY --from=build /app/target/tpg-psa.jar /app/tpg-psa.jar
+# Copiar el resto de los archivos del proyecto
+COPY src ./src
 
-# Exponer el puerto en el que se ejecuta la aplicación
+# Empaquetar la aplicación en un archivo JAR
+RUN mvn package -DskipTests
+
+# Exponer el puerto 8080
 EXPOSE 8080
 
 # Comando para ejecutar la aplicación Java
-CMD ["java", "-jar", "tpg-psa.jar"]
+CMD ["java", "-jar", "target/tpg-psa.jar"]
