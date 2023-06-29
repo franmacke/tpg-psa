@@ -1,5 +1,5 @@
 # Imagen base de Java 17 openjdk con Maven
-FROM openjdk:17-jdk-slim AS build
+FROM maven:3.8-openjdk-17 AS build
 
 # Copiar el código fuente y el archivo pom.xml al contenedor
 COPY pom.xml /app/pom.xml
@@ -9,7 +9,7 @@ COPY src /app/src
 WORKDIR /app
 
 # Imagen base de Java 17
-FROM openjdk:17-jdk-slim AS runtime
+FROM ibm-semeru-runtimes:open-17-jre-centos7 AS runtime
 
 # Establecer el directorio de trabajo
 WORKDIR /app
