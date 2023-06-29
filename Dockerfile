@@ -1,5 +1,5 @@
 # Imagen base de Java 17 con Maven
-FROM maven:3.8.4-openjdk-17-slim AS build
+FROM openjdk:17-jdk-slim AS build
 
 # Copiar el código fuente y el archivo pom.xml al contenedor
 COPY pom.xml /app/pom.xml
