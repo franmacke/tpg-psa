@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface TareaService {
 
-    void guardarTarea(Tarea tarea);
+    Optional<Tarea> guardarTarea(Tarea tarea);
 
     Optional<Tarea> obtenerTarea(Long id);
 

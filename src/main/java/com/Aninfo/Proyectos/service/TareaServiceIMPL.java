@@ -18,8 +18,10 @@ public class TareaServiceIMPL implements TareaService{
 
     @Override
     @Transactional
-    public void guardarTarea(Tarea tarea) {
-        tareaDAO.save(tarea);
+    public Optional<Tarea> guardarTarea(Tarea tarea) {
+        Tarea nuevaTarea = tareaDAO.save(tarea);
+
+        return Optional.ofNullable(nuevaTarea);
     }
 
     @Override

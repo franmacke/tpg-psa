@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
@@ -27,8 +28,8 @@ public class TareaController {
     }
 
     @PostMapping
-    public void crearTarea(@RequestBody Tarea tarea) {
-        tareaService.guardarTarea(tarea);
+    public Optional<Tarea> crearTarea(@RequestBody Tarea tarea) {
+        return tareaService.guardarTarea(tarea);
     }
 
     @PutMapping("/{id}")
