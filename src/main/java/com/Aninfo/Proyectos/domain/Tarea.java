@@ -6,6 +6,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "tareas")
@@ -26,6 +27,8 @@ public class Tarea {
     private LocalDate fechaFinal;
     private Integer esfuerzoEstimado;
     private Integer esfuerzoReal;
+    @ElementCollection
+    private List<String> recursos;
     @JoinColumn
     private long idProyecto;
 
@@ -39,6 +42,7 @@ public class Tarea {
         this.esfuerzoEstimado = tarea.esfuerzoEstimado;
         this.esfuerzoReal = tarea.esfuerzoReal;
         this.estado = tarea.estado;
+        this.recursos = tarea.recursos;
         return this;
     }
 

@@ -33,7 +33,8 @@ public class TareaServiceIMPL implements TareaService{
     @Override
     @Transactional
     public void actualizarTarea(Long id, Tarea tarea) {
-        tareaDAO.findById(id).get().actualizarTarea(tarea);
+        Optional<Tarea> tareaFind = tareaDAO.findById(id);
+        tareaFind.ifPresent(value -> value.actualizarTarea(tarea));
     }
 
     @Override

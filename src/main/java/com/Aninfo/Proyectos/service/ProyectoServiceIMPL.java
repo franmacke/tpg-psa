@@ -17,8 +17,9 @@ public class ProyectoServiceIMPL implements ProyectoService {
 
     @Override
     @Transactional
-    public void guardarProyecto(Proyecto proyecto){
-        proyectoDAO.save(proyecto);
+    public Optional<Proyecto> guardarProyecto(Proyecto proyecto){
+        Proyecto proyectoNuevo = proyectoDAO.save(proyecto);
+        return Optional.ofNullable(proyectoNuevo);
     }
 
     @Override

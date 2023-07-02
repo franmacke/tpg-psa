@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface ProyectoService {
 
-    void guardarProyecto(Proyecto proyecto);
+    Optional<Proyecto> guardarProyecto(Proyecto proyecto);
 
     Optional<Proyecto> obtenerProyecto(Long id);
 
