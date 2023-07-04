@@ -4,6 +4,7 @@ import com.Aninfo.Proyectos.dao.TareaDAO;
 import com.Aninfo.Proyectos.domain.Proyecto;
 import com.Aninfo.Proyectos.domain.Tarea;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,7 +41,7 @@ public class TareaServiceIMPL implements TareaService{
     @Override
     @Transactional
     public void eliminarTarea(Long id) {
-        tareaDAO.delete(tareaDAO.getReferenceById(id));
+        tareaDAO.delete(tareaDAO.findById(id).orElseThrow(() -> new EmptyResultDataAccessException("No se encontró la tarea con el ID: " + id, 1)));
     }
 
     @Override

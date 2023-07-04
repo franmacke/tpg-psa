@@ -3,6 +3,7 @@ package com.Aninfo.Proyectos.service;
 import com.Aninfo.Proyectos.dao.ProyectoDAO;
 import com.Aninfo.Proyectos.domain.Proyecto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,7 +40,8 @@ public class ProyectoServiceIMPL implements ProyectoService {
     @Override
     @Transactional
     public void eliminarProyecto(Long id) {
-        proyectoDAO.delete(proyectoDAO.findById(id).get());
+        proyectoDAO.delete(proyectoDAO.findById(id).orElseThrow(() -> new EmptyResultDataAccessException("No se encontró el proyecto con el ID: " + id, 1)));
+
     }
 
     @Override
