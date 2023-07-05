@@ -1,8 +1,10 @@
 package com.Aninfo.Proyectos.controller;
 
 import com.Aninfo.Proyectos.Enum.EstadoTarea;
+import com.Aninfo.Proyectos.domain.Proyecto;
 import com.Aninfo.Proyectos.domain.RecursoHumano;
 import com.Aninfo.Proyectos.domain.Tarea;
+import com.Aninfo.Proyectos.service.ProyectoService;
 import com.Aninfo.Proyectos.service.RecursoService;
 import com.Aninfo.Proyectos.service.TareaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,6 +28,9 @@ public class TareaController {
 
     @Autowired
     private RecursoService recursoService;
+
+    @Autowired
+    private ProyectoService proyectoService;
 
     @GetMapping("/{id}")
     public ResponseEntity<Tarea> obtenerTarea(@PathVariable Long id) {
@@ -57,6 +63,15 @@ public class TareaController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarTarea(@PathVariable Long id) {
         try {
+            Optional<Tarea> tarea = tareaService.obtenerTarea(id);
+            if (tarea.isPresent()){
+                Long idProyecto = tarea.get().getIdProyecto();
+                Proyecto proyecto = proyectoService.obtenerProyecto(idProyecto).orElseThrow(() -> new EmptyResultDataAccessException("No se encontró el proyecto con el ID: " + id, 1));
+                List<Tarea> nuevasTareas = new ArrayList<Tarea>(proyecto.getTareas().stream().filter(x -> x.getId() != id).toList());
+                proyecto.setTareas(nuevasTareas);
+                proyectoService.actualizarProyecto(idProyecto, proyecto);
+
+            }
             tareaService.eliminarTarea(id);
             return ResponseEntity.ok("La tarea se eliminó correctamente");
 

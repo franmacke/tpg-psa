@@ -32,9 +32,9 @@ public class ProyectoServiceIMPL implements ProyectoService {
     @Override
     @Transactional
     public void actualizarProyecto(Long id, Proyecto proyecto) {
-        Optional<Proyecto> proyecto1 = proyectoDAO.findById(id);
-        proyecto1.get().actualizarProyecto(proyecto);
-        proyectoDAO.save(proyecto1.get());
+//        Optional<Proyecto> proyecto1 = proyectoDAO.findById(id);
+//        proyecto1.get().actualizarProyecto(proyecto);
+        proyectoDAO.save(proyecto);
     }
 
     @Override
